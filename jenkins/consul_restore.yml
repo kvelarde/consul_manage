@@ -1,10 +1,10 @@
 ---
 - job:
     name: consul-restore
-    project-type: freestyle
-    description: "Consul restore"
+    project-type: pipeline
+    description: "Consul: Restore"
     disabled: false
-    display-name: "Consul restore"
+    display-name: "Consul: Restore"
     concurrent: true
     logrotate:
       daysToKeep: 10
