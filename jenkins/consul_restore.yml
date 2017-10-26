@@ -18,18 +18,17 @@
           name: RESTORE_FILE_URL
           default: s3://kurtis-storage/consul/consul_backup.json
           description: "Backup  S3 file Location"
+      - string:
+          name: BACKUPFILE
+          default: consul_backup.json
     dsl: |
           import hudson.EnvVars
           try {
           node {
             stage 'Restore Consul K/V Data'
               println "\u2600 Restoring Data"
-              sh "consulate --api-host ${SERVER} --api-port 8500  kv backup > consul_backup.json"
-              sh "aws s3 cp ul_backup.json ${BACKUP_URI}"
-              sh "aws s3 cp ${RESTORE_FILE_URL}"
-              sh "backup_file=${url##*/}"
-              sh "consulate --api-host ${SERVER} --api-port 8500  --token ${TOKEN} kv restore --file $backup_file"
-              sh "rm $backup_file"
+              sh 'aws s3 cp ${RESTORE_FILE_URL} ${BACKUPFILE}'
+              sh 'consulate --api-host ${SERVER} --api-port 8500 kv restore --file ${BACKUPFILE}'
           } // end node
           } // end try
           catch (exc) {
