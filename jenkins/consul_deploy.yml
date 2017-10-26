@@ -1,0 +1,32 @@
+---
+- job:
+    name: consul_deploy
+    project-type: pipeline
+    description: 'Consul: Deploy JOB'
+    disabled: false
+    display-name: 'Consul: Deploy JOB'
+    logrotate:
+      daysToKeep: 10
+      numToKeep: 50
+    parameters:
+      - string:
+          name: SERVER
+          default: 34.214.176.16
+    dsl: |
+          import hudson.EnvVars
+          try {
+          node {
+            stage ' file'
+              println "\u2600 checking out code"
+              git branch: 'master', url: 'https://github.com/kvelarde/consul_manage.git'
+            stage 'Deploy Stack'
+              sh 'docker stack deploy -c consul-stack.yml consul'
+          } // end node
+          } // end try
+          catch (exc) {
+            String recipient = 'infra@lists.kurtisvelarde.com'
+            mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",
+              body: "It appears that ${env.BUILD_URL} is failing",
+              to: recipient,
+              from: 'build@kurtisvelarde.com'
+          }
