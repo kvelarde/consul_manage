@@ -1,10 +1,10 @@
 ---
 - job:
-    name: consul-restore
+    name: consul_restore
     project-type: pipeline
-    description: "Consul: Restore"
+    description: 'Consul: Restore JOB'
     disabled: false
-    display-name: "Consul: Restore"
+    display-name: 'Consul: Restore JOB'
     logrotate:
       daysToKeep: 10
       numToKeep: 50
@@ -24,8 +24,8 @@
           import hudson.EnvVars
           try {
           node {
-            stage 'Restore Consul K/V Data'
-              println "\u2600 Restoring Data"
+            stage 'Restore KV from S3'
+              println "\u2600 checking out code"
               sh 'aws s3 cp ${RESTORE_FILE_URL} ${BACKUPFILE}'
               sh 'consulate --api-host ${SERVER} --api-port 8500 kv restore --file ${BACKUPFILE}'
           } // end node
