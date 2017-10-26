@@ -1,11 +1,10 @@
 ---
 - job:
     name: consul-restore
-    project-type: freestyle
+    project-type: pipeline
     description: "Consul: Restore"
     disabled: false
     display-name: "Consul: Restore"
-    concurrent: true
     logrotate:
       daysToKeep: 10
       numToKeep: 50
@@ -17,7 +16,7 @@
       - string:
           name: RESTORE_FILE_URL
           default: s3://kurtis-storage/consul/consul_backup.json
-          description: "Backup  S3 file Location"
+          description: "Backup  S3 file Location."
       - string:
           name: BACKUPFILE
           default: consul_backup.json
