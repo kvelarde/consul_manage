@@ -1,0 +1,34 @@
+---
+- job:
+    name: consul_backup
+    project-type: pipeline
+    description: 'Consul: Backup JOB'
+    disabled: false
+    display-name: 'Consul: Backup JOB'
+    logrotate:
+      daysToKeep: 10
+      numToKeep: 50
+    parameters:
+      - string:
+          name: SERVER
+          default: 34.214.176.16
+      - string:
+          name: BACKUP_URI
+          default: s3://kurtis-storage/consul/
+    dsl: |
+          import hudson.EnvVars
+          try {
+          node {
+            stage 'Back KV to S3'
+              println "\u2600 checking out code"
+              sh "consulate --api-host ${SERVER} --api-port 8500  kv backup > consul_backup.json"
+              sh "aws s3 cp ul_backup.json ${BACKUP_URI}"
+          } // end node
+          } // end try
+          catch (exc) {
+            String recipient = 'infra@lists.kurtisvelarde.com'
+            mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",
+              body: "It appears that ${env.BUILD_URL} is failing",
+              to: recipient,
+              from: 'build@kurtisvelarde.com'
+          }
