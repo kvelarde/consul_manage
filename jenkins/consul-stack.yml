@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  consul:
+    image: consul
+    ports:
+      - 8500:8500
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    networks:
+      - proxy
+      - default
+    deploy:
+      labels:
+        - com.df.notify=true
+        - com.df.distribute=true
+        - com.df.servicePath=/consul
+        - com.df.port=8500
+
+networks:
+  proxy:
+    external: true
+  default:
+    external: false
