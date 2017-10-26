@@ -1,7 +1,7 @@
 ---
 - job:
     name: consul-restore
-    project-type: pipeline
+    project-type: freestyle
     description: "Consul: Restore"
     disabled: false
     display-name: "Consul: Restore"
