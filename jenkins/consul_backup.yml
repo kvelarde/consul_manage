@@ -19,9 +19,10 @@
           import hudson.EnvVars
           try {
           node {
-            stage 'Back KV to S3'
+            stage 'Backup KV to file'
               println "\u2600 checking out code"
               sh '/usr/bin/consulate --api-host ${SERVER} --api-port 8500  kv backup > consul_backup.json'
+            stage 'Upload to s3'
               sh 'aws s3 cp consul_backup.json ${BACKUP_URI}'
           } // end node
           } // end try
