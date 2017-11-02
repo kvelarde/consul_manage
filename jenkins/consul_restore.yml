@@ -23,7 +23,7 @@
     dsl: |
           import hudson.EnvVars
           try {
-          node {
+          node('jenkins-agent') {
             stage 'Restore KV from S3'
               println "\u2600 checking out code"
               sh 'aws s3 cp ${RESTORE_FILE_URL} ${BACKUPFILE}'

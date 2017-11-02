@@ -15,8 +15,8 @@
     dsl: |
           import hudson.EnvVars
           try {
-          node {
-            stage ' file'
+          node('jenkins-agent') {
+            stage 'Deploy stack file file'
               println "\u2600 checking out code"
               git branch: 'master', url: 'https://github.com/kvelarde/consul_manage.git'
             stage 'Deploy Stack'

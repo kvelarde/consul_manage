@@ -18,7 +18,7 @@
     dsl: |
           import hudson.EnvVars
           try {
-          node {
+          node('jenkins-agent') {
             stage 'Backup KV to file'
               println "\u2600 checking out code"
               sh '/usr/bin/consulate --api-host ${SERVER} --api-port 8500  kv backup > consul_backup.json'
