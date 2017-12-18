@@ -8,10 +8,6 @@
     logrotate:
       daysToKeep: 10
       numToKeep: 50
-    parameters:
-      - string:
-          name: SERVER
-          default: 34.214.176.16
     dsl: |
           import hudson.EnvVars
           try {
