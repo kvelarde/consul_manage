@@ -11,7 +11,7 @@
     parameters:
       - string:
           name: SERVER
-          default: 34.214.176.16
+          default: 172.16.4.255
       - string:
           name: BACKUP_URI
           default: s3://kurtis-storage/consul/
